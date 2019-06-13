@@ -17,7 +17,6 @@
 package org.symphonyoss.symphony.messageml.elements;
 
 import org.symphonyoss.symphony.messageml.exceptions.InvalidInputException;
-import org.symphonyoss.symphony.messageml.util.XmlPrintStream;
 
 import java.util.Collections;
 
@@ -44,26 +43,4 @@ public class TableBody extends Element {
     assertNoText();
     assertContentModel(Collections.<Class<? extends Element>>singleton(TableRow.class));
   }
-
-
-  @Override
-  public void asPresentationML(XmlPrintStream out) {
-    Element parent = getParent();
-
-    if (!TableSelect.class.equals(parent.getClass())) {
-      super.asPresentationML(out);
-      return;
-    }
-
-    Long rowNumber = 1L;
-    for (Element child : getChildren()) {
-      TableRow row = (TableRow) child;
-
-      row.SetRowNumber(rowNumber);
-      rowNumber++;
-    }
-
-    super.asPresentationML(out);
-  }
-
 }

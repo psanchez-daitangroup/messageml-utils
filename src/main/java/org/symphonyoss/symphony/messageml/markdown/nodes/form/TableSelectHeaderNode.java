@@ -36,6 +36,7 @@ public class TableSelectHeaderNode extends FormElementNode {
     this.text = text;
   }
 
+  @Override
   public String getOpeningDelimiter() {
     if (LEFT.equals(position)) {
       return text + DELIMITER;
@@ -43,6 +44,7 @@ public class TableSelectHeaderNode extends FormElementNode {
     return "";
   }
 
+  @Override
   public String getClosingDelimiter() {
     if (RIGHT.equals(position)) {
       return DELIMITER + text + "\n";

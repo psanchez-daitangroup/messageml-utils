@@ -41,6 +41,6 @@ public class TableFooter extends Element {
   @Override
   public void validate() throws InvalidInputException {
     assertNoText();
-    assertContentModel(Collections.<Class<? extends Element>>singleton(TableRow.class));
+    // assertContentModel(Collections.<Class<? extends Element>>singleton(TableRow.class));
   }
 }

@@ -26,10 +26,12 @@ public class TableSelectNode extends FormElementNode {
   private final static String LEAD = "Table Select:";
   private final static String DELIMITER = "---";
 
+  @Override
   public String getOpeningDelimiter() {
     return LEAD + "\n" + DELIMITER + "\n";
   }
 
+  @Override
   public String getClosingDelimiter() {
     return "\n" + DELIMITER + "\n";
   }

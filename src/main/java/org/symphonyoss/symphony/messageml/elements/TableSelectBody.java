@@ -21,26 +21,27 @@ import org.symphonyoss.symphony.messageml.exceptions.InvalidInputException;
 import java.util.Collections;
 
 /**
- * Class representing a table header container.
+ * Class representing a table select body container.
  *
- * @author lukasz
- * @since 3/27/17
+ * @author Pedro Sanchez
+ * @since 06/10/2019
  */
-public class TableHeader extends Element {
-  public static final String MESSAGEML_TAG = "thead";
+public class TableSelectBody extends Element {
+  public static final String MESSAGEML_TAG = "tbody";
 
-  public TableHeader(Element parent) {
+  public TableSelectBody(Element parent) {
     super(parent, MESSAGEML_TAG);
   }
 
   @Override
   public String toString() {
-    return "Header";
+    return "Body";
   }
 
   @Override
   public void validate() throws InvalidInputException {
     assertNoText();
-    assertContentModel(Collections.<Class<? extends Element>>singleton(TableRow.class));
+    assertContentModel(Collections.singleton(TableSelectRow.class));
   }
+
 }

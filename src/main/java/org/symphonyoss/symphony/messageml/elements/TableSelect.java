@@ -44,13 +44,7 @@ public class TableSelect extends FormElement {
   private static final String PRESENTATIONML_TABLE_TAG = "table";
 
   public static final Set<String> VALID_TYPES = new HashSet<>(Arrays.asList("button", "checkbox"));
-
   public static final Set<String> VALID_POSITIONS = new HashSet<>(Arrays.asList("left", "right"));
-
-  private final static String LEFT = "left";
-  private final static String RIGHT = "right";
-  private final static String BUTTON = "button";
-  private final static String CHECKBOX = "checkbox";
 
   public TableSelect(Element parent) {
     super(parent, MESSAGEML_TAG);
@@ -64,41 +58,20 @@ public class TableSelect extends FormElement {
   public void validate() throws InvalidInputException {
     super.validate();
 
-    String name = getAttribute(NAME_ATTR);
+    assertRequired(NAME_ATTR);
 
-    if (name == null || name.trim().isEmpty()) {
-      throw new InvalidInputException("The attribute \"name\" is required");
-    }
+    assertRequired(TYPE_ATTR);
+    assertAttributeValue(TYPE_ATTR, VALID_TYPES);
 
-    String type = getAttribute(TYPE_ATTR);
+    assertRequired(POSITION_ATTR);
+    assertAttributeValue(POSITION_ATTR, VALID_POSITIONS);
 
-    if (type == null) {
-      throw new InvalidInputException("The attribute \"type\" is required");
-    }
-
-    if (!VALID_TYPES.contains(type)) {
-      throw new InvalidInputException("Attribute \"type\" must be \"button\" or \"checkbox\"");
-    }
-
-
-    String position = getAttribute(POSITION_ATTR);
-
-
-    if (position == null) {
-      throw new InvalidInputException("The attribute \"position\" is required");
-    }
-
-    if (!VALID_POSITIONS.contains(position)) {
-      throw new InvalidInputException("Attribute \"position\" must be \"left\" or \"right\"");
-    }
-
-    assertContentModel(Arrays.asList(TableHeader.class, TableBody.class, TableFooter.class, TableRow.class));
+    assertContentModel(Arrays.asList(TableSelectHeader.class, TableSelectBody.class, TableFooter.class));
   }
 
   @Override
   protected void buildAttribute(org.w3c.dom.Node item) throws InvalidInputException {
     switch (item.getNodeName()) {
-
       case NAME_ATTR:
         setAttribute(NAME_ATTR, getStringAttribute(item));
         break;
@@ -143,14 +116,6 @@ public class TableSelect extends FormElement {
     return getAttribute(NAME_ATTR);
   }
 
-  public String getPosition() {
-    return getAttribute(POSITION_ATTR);
-  }
-
-  public String getType() {
-    return getAttribute(TYPE_ATTR);
-  }
-
   public String getHeaderText() {
     return getAttribute(HEADER_TEXT_ATTR);
   }
@@ -159,20 +124,11 @@ public class TableSelect extends FormElement {
     return getAttribute(BUTTON_TEXT_ATTR);
   }
 
-  public Boolean isRight() {
-    return RIGHT.equals(getPosition());
+  public String getPosition() {
+    return getAttribute(POSITION_ATTR);
   }
 
-  public Boolean isLeft() {
-    return LEFT.equals(getPosition());
+  public String getType() {
+    return getAttribute(TYPE_ATTR);
   }
-
-  public Boolean isButton() {
-    return BUTTON.equals(getType());
-  }
-
-  public Boolean isCheckbox() {
-    return CHECKBOX.equals(getType());
-  }
-
 }

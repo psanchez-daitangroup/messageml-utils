@@ -48,6 +48,7 @@ public class TableSelectRowNode extends FormElementNode {
     }
   }
 
+  @Override
   public String getOpeningDelimiter() {
     if (LEFT.equals(position)) {
       return tag + DELIMITER;
@@ -55,6 +56,7 @@ public class TableSelectRowNode extends FormElementNode {
     return "";
   }
 
+  @Override
   public String getClosingDelimiter() {
     if (RIGHT.equals(position)) {
       return DELIMITER + tag + "\n";

@@ -58,6 +58,7 @@ public class MessageMLParser {
   private ObjectNode entityJson;
 
   private int index;
+  private Long rowNumber;
 
   static {
     FREEMARKER.setDefaultEncoding("UTF-8");
@@ -376,15 +377,25 @@ public class MessageMLParser {
         return new Table(parent);
 
       case TableHeader.MESSAGEML_TAG:
+        if (TableSelect.class.equals(parent.getClass())) {
+          return new TableSelectHeader(parent);
+        }
         return new TableHeader(parent);
 
       case TableBody.MESSAGEML_TAG:
+        if (TableSelect.class.equals(parent.getClass())) {
+          return new TableSelectBody(parent);
+        }
         return new TableBody(parent);
 
       case TableFooter.MESSAGEML_TAG:
         return new TableFooter(parent);
 
       case TableRow.MESSAGEML_TAG:
+        if (TableSelectBody.class.equals(parent.getClass())) {
+          rowNumber++;
+          return new TableSelectRow(parent, rowNumber, (TableSelect) parent.getParent());
+        }
         return new TableRow(parent);
 
       case TableHeaderCell.MESSAGEML_TAG:
@@ -427,6 +438,7 @@ public class MessageMLParser {
         return new Checkbox(parent);
 
       case TableSelect.MESSAGEML_TAG:
+        rowNumber = 0L;
         return new TableSelect(parent);
 
       default:

@@ -16,20 +16,22 @@
 
 package org.symphonyoss.symphony.messageml.elements;
 
+import org.commonmark.node.Node;
 import org.symphonyoss.symphony.messageml.exceptions.InvalidInputException;
+import org.symphonyoss.symphony.messageml.markdown.nodes.form.TableSelectHeaderNode;
 
 import java.util.Collections;
 
 /**
  * Class representing a table header container.
  *
- * @author lukasz
- * @since 3/27/17
+ * @author Pedro Sanchez
+ * @since 06/10/2019
  */
-public class TableHeader extends Element {
+public class TableSelectHeader extends Element {
   public static final String MESSAGEML_TAG = "thead";
 
-  public TableHeader(Element parent) {
+  public TableSelectHeader(Element parent) {
     super(parent, MESSAGEML_TAG);
   }
 
@@ -42,5 +44,11 @@ public class TableHeader extends Element {
   public void validate() throws InvalidInputException {
     assertNoText();
     assertContentModel(Collections.<Class<? extends Element>>singleton(TableRow.class));
+  }
+
+  @Override
+  public Node asMarkdown() {
+    TableSelect tableSelect = (TableSelect) getParent();
+    return new TableSelectHeaderNode(tableSelect.getPosition(), tableSelect.getHeaderText());
   }
 }
